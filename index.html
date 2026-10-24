@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academic Helper Grade 10 | Physics & Mathematics</title>
+  <script src="https://hqfkgaqblkqgjzxsdegs.supabase.co/rest/v1/"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0a0e17; --bg-card: #111827; --bg-glass: rgba(17, 24, 39, 0.75);
+      --accent: #00f0ff; --accent-dim: #00a8b3; --accent-glow: rgba(0, 240, 255, 0.35);
+      --secondary: #7b61ff; --success: #00e676; --warning: #ffab00; --danger: #ff5252;
+      --text: #e8f0ff; --text-muted: #8b9bb4; --border: rgba(0, 240, 255, 0.18);
+      --radius: 14px; --shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Rajdhani', sans-serif; background: var(--bg-deep); color: var(--text);
+      min-height: 100vh; overflow-x: hidden;
+      background-image:
+        radial-gradient(ellipse at 20% 20%, rgba(0, 240, 255, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 80%, rgba(123, 97, 255, 0.06) 0%, transparent 50%),
+        linear-gradient(180deg, #0a0e17 0%, #0d1320 100%);
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px; pointer-events: none; z-index: 0;
+    }
+    .app { position: relative; z-index: 1; min-height: 100vh; }
+    h1, h2, h3, h4 { font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
+    h1 { font-size: 2.4rem; background: linear-gradient(135deg, var(--accent), var(--secondary)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    h2 { font-size: 1.6rem; color: var(--accent); }
+    h3 { font-size: 1.2rem; color: var(--text); }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 24px; border: 1px solid var(--border); border-radius: 10px;
+      background: linear-gradient(135deg, rgba(0,240,255,0.12), rgba(123,97,255,0.08));
+      color: var(--text); font-family: 'Rajdhani', sans-serif; font-weight: 600; font-size: 1rem;
+      cursor: pointer; transition: all 0.25s ease; text-decoration: none;
+    }
+    .btn:hover { background: linear-gradient(135deg, rgba(0,240,255,0.25), rgba(123,97,255,0.18)); border-color: var(--accent); box-shadow: 0 0 20px var(--accent-glow); transform: translateY(-2px); }
+    .btn-primary { background: linear-gradient(135deg, var(--accent-dim), var(--secondary)); border: none; color: #0a0e17; font-weight: 700; }
+    .btn-primary:hover { box-shadow: 0 0 30px var(--accent-glow); }
+    .btn-ghost { background: transparent; }
+    .btn-sm { padding: 8px 16px; font-size: 0.9rem; }
+
+    .card {
+      background: var(--bg-glass); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; backdrop-filter: blur(12px); box-shadow: var(--shadow); transition: all 0.3s ease;
+    }
+    .card:hover { border-color: rgba(0,240,255,0.35); box-shadow: 0 12px 40px rgba(0,0,0,0.5), 0 0 20px var(--accent-glow); }
+
+    input, select, textarea {
+      width: 100%; padding: 12px 16px; background: rgba(10,14,23,0.8); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); font-family: 'Rajdhani', sans-serif; font-size: 1rem;
+      outline: none; transition: border 0.2s;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
+    select option { background: #111827; color: var(--text); }
+    label { display: block; margin-bottom: 6px; color: var(--text-muted); font-weight: 500; }
+
+    .hidden { display: none !important; }
+    .flex { display: flex; }
+    .justify-center { justify-content: center; }
+    .gap-3 { gap: 12px; } .gap-4 { gap: 16px; }
+    .grid { display: grid; }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 20px; }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 18px; }
+    .text-center { text-align: center; }
+    .text-muted { color: var(--text-muted); }
+    .mt-2 { margin-top: 8px; } .mt-4 { margin-top: 16px; } .mt-6 { margin-top: 24px; }
+    .mb-2 { margin-bottom: 8px; } .mb-4 { margin-bottom: 16px; } .mb-6 { margin-bottom: 24px; }
+
+    /* SCREENS – display is controlled ONLY by .active (fixes landing always showing) */
+    .screen { min-height: 100vh; padding: 24px; display: none; }
+    .screen.active { display: block; }
+    #landing.active { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; }
+    .hero-badge { display: inline-block; padding: 6px 16px; border-radius: 20px; background: rgba(0,240,255,0.1); border: 1px solid var(--border); color: var(--accent); font-size: 0.85rem; letter-spacing: 2px; margin-bottom: 20px; }
+    .hero-title { font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 12px; }
+    .hero-sub { font-size: 1.2rem; color: var(--text-muted); max-width: 560px; margin: 0 auto 32px; }
+    .credits { margin-top: 40px; font-size: 0.95rem; color: var(--text-muted); }
+    .credits strong { color: var(--accent); }
+
+    .auth-container { max-width: 420px; margin: 60px auto; padding: 32px; }
+    .auth-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+    .auth-tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; border-radius: 8px; border: 1px solid transparent; font-weight: 600; }
+    .auth-tab.active { background: rgba(0,240,255,0.15); border-color: var(--accent); color: var(--accent); }
+
+    .topbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; margin-bottom: 28px; background: var(--bg-glass); border: 1px solid var(--border); border-radius: var(--radius); backdrop-filter: blur(12px); }
+    .logo { font-family: 'Orbitron'; font-size: 1.15rem; color: var(--accent); }
+    .user-info { display: flex; align-items: center; gap: 12px; }
+    .avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--secondary)); display: flex; align-items: center; justify-content: center; font-weight: 700; color: #0a0e17; }
+
+    .feature-card { text-align: center; padding: 28px 20px; cursor: pointer; transition: all 0.3s; }
+    .feature-card:hover { transform: translateY(-6px); }
+    .feature-icon { width: 56px; height: 56px; margin: 0 auto 14px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; background: rgba(0,240,255,0.1); border: 1px solid var(--border); }
+    .feature-card h3 { font-size: 1rem; margin-bottom: 6px; }
+    .feature-card p { font-size: 0.85rem; color: var(--text-muted); }
+
+    .panel { max-width: 900px; margin: 0 auto; padding: 28px; }
+    .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+
+    .quiz-q { margin-bottom: 20px; padding: 20px; background: rgba(0,0,0,0.25); border-radius: 12px; border: 1px solid var(--border); }
+    .quiz-options label { display: flex; align-items: center; gap: 10px; padding: 10px 14px; margin: 6px 0; border-radius: 8px; cursor: pointer; background: rgba(255,255,255,0.03); border: 1px solid transparent; transition: all 0.2s; color: var(--text); }
+    .quiz-options label:hover { border-color: var(--accent); background: rgba(0,240,255,0.08); }
+    .quiz-options input { width: auto; }
+
+    .progress-bar { height: 10px; background: rgba(255,255,255,0.08); border-radius: 5px; overflow: hidden; margin: 8px 0; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent), var(--secondary)); border-radius: 5px; transition: width 0.5s ease; }
+
+    .term-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+    .term-tab { padding: 8px 18px; border-radius: 20px; cursor: pointer; border: 1px solid var(--border); font-weight: 600; }
+    .term-tab.active { background: rgba(0,240,255,0.2); border-color: var(--accent); color: var(--accent); }
+    .note-content { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 20px; border: 1px solid var(--border); line-height: 1.7; max-height: 500px; overflow-y: auto; }
+    .note-content h4 { color: var(--accent); margin: 16px 0 8px; }
+    .note-content ul { padding-left: 20px; }
+
+    .game-area { background: rgba(0,0,0,0.4); border-radius: 12px; padding: 24px; border: 1px solid var(--border); min-height: 320px; }
+    .math24-board { display: grid; grid-template-columns: repeat(4, 72px); gap: 12px; justify-content: center; margin: 20px 0; }
+    .math24-card { width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; background: linear-gradient(135deg, rgba(0,240,255,0.15), rgba(123,97,255,0.1)); border: 2px solid var(--accent); border-radius: 12px; }
+    .word-grid { display: grid; gap: 4px; width: 100%; max-width: 440px; margin: 16px auto; }
+    .word-cell { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; background: rgba(0,240,255,0.08); border: 1px solid var(--border); border-radius: 4px; font-weight: 600; cursor: pointer; user-select: none; font-size: clamp(0.8rem, 3.5vw, 1.1rem); }
+    .word-cell.selected { background: var(--accent); color: #0a0e17; }
+    .word-cell.found { background: var(--success); color: #0a0e17; }
+
+    .focus-circle { width: 180px; height: 180px; border-radius: 50%; border: 3px solid var(--accent); margin: 30px auto; display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-family: 'Orbitron'; box-shadow: 0 0 40px var(--accent-glow); transition: all 0.3s; cursor: pointer; }
+
+    .learner-type { padding: 16px; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 12px; cursor: pointer; transition: all 0.2s; }
+    .learner-type:hover, .learner-type.selected { border-color: var(--accent); background: rgba(0,240,255,0.1); }
+
+    #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--bg-card); border: 1px solid var(--accent); padding: 14px 28px; border-radius: 10px; z-index: 999; transition: transform 0.3s; box-shadow: 0 0 30px var(--accent-glow); max-width: 90vw; text-align: center; }
+    #toast.show { transform: translateX(-50%) translateY(0); }
+
+    .link-list a { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; color: var(--text); text-decoration: none; transition: all 0.2s; }
+    .link-list a:hover { border-color: var(--accent); background: rgba(0,240,255,0.08); }
+
+    @media (max-width: 640px) {
+      .topbar { flex-direction: column; gap: 12px; }
+      .panel { padding: 16px; }
+      .screen { padding: 14px; }
+      .math24-board { grid-template-columns: repeat(2, 72px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- LANDING -->
+    <section id="landing" class="screen active">
+      <div class="hero-badge">GRADE 10 · CAPS ALIGNED</div>
+      <h1 class="hero-title">Academic Helper</h1>
+      <p class="hero-sub">Your futuristic study companion for <strong style="color:var(--accent)">Physics</strong> &amp; <strong style="color:var(--secondary)">Mathematics</strong>. Quizzes, notes, games, planners &amp; more.</p>
+      <div class="flex gap-4 justify-center" style="flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="showScreen('auth');switchAuth('register')">Get Started</button>
+        <button class="btn btn-ghost" onclick="showScreen('auth');switchAuth('login')">Login</button>
+      </div>
+      <div class="credits">
+        <p>Developer: <strong>Hlayiseka Hlongwane</strong></p>
+        <p>Research &amp; Content: <strong>Ntsako Makaringe</strong></p>
+      </div>
+    </section>
+
+    <!-- AUTH -->
+    <section id="auth" class="screen">
+      <div class="card auth-container">
+        <div class="text-center mb-6">
+          <h2>Welcome</h2>
+          <p class="text-muted">Sign in or create your account</p>
+        </div>
+        <div class="auth-tabs">
+          <div class="auth-tab active" id="tab-login" onclick="switchAuth('login')">Login</div>
+          <div class="auth-tab" id="tab-register" onclick="switchAuth('register')">Register</div>
+        </div>
+
+        <div id="login-form">
+          <div class="mb-4"><label for="login-email">Email</label><input type="email" id="login-email" placeholder="you@example.com" autocomplete="email" /></div>
+          <div class="mb-4"><label for="login-password">Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" /></div>
+          <button class="btn btn-primary" style="width:100%" onclick="handleLogin()">Login</button>
+        </div>
+
+        <div id="register-form" class="hidden">
+          <div class="mb-4"><label for="reg-name">Full Name</label><input type="text" id="reg-name" placeholder="Your name" autocomplete="name" /></div>
+          <div class="mb-4"><label for="reg-email">Email</label><input type="email" id="reg-email" placeholder="you@example.com" autocomplete="email" /></div>
+          <div class="mb-4"><label for="reg-password">Password</label><input type="password" id="reg-password" placeholder="Min 6 characters" autocomplete="new-password" /></div>
+          <button class="btn btn-primary" style="width:100%" onclick="handleRegister()">Create Account</button>
+        </div>
+
+        <p class="text-center mt-4 text-muted" style="font-size:0.85rem">
+          <a href="#" onclick="showScreen('landing');return false" style="color:var(--accent)">← Back to home</a>
+        </p>
+        <p id="auth-msg" class="text-center mt-4" style="color:var(--danger);font-size:0.9rem"></p>
+      </div>
+    </section>
+
+    <!-- DASHBOARD -->
+    <section id="dashboard" class="screen">
+      <div class="topbar">
+        <div class="logo">⚡ Academic Helper G10</div>
+        <div class="user-info">
+          <div class="avatar" id="user-avatar">U</div>
+          <span id="user-name">Learner</span>
+          <button class="btn btn-sm btn-ghost" onclick="handleLogout()">Logout</button>
+        </div>
+      </div>
+      <div class="panel">
+        <h2 class="mb-6">Dashboard</h2>
+        <div class="grid grid-3" id="feature-grid"></div>
+      </div>
+    </section>
+
+    <!-- FEATURE PANEL -->
+    <section id="feature-panel" class="screen">
+      <div class="topbar">
+        <div class="logo">⚡ Academic Helper G10</div>
+        <button class="btn btn-sm" onclick="showScreen('dashboard')">← Dashboard</button>
+      </div>
+      <div class="panel" id="panel-content"></div>
+    </section>
+  </div>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // ========== SUPABASE CONFIG ==========
+    // Replace with your own Supabase project credentials (leave as-is for local mode)
+    const SUPABASE_URL = 'https://hqfkgaqblkqgjzxsdegs.supabase.co/rest/v1/';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhxZmtnYXFibGtxZ2p6eHNkZWdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI4NzI0NjcsImV4cCI6MjEwODQ0ODQ2N30.ysofv59bajjsh2qX6jsHQ_2iwyAIZ-xY78ThrXJrzK4';
+
+    // Renamed from `supabase` so it can't clash with the CDN's global
+    let sb = null;
+    try {
+      if (SUPABASE_URL !== 'https://hqfkgaqblkqgjzxsdegs.supabase.co/rest/v1/' && window.supabase) {
+        sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      }
+    } catch (e) { console.warn('Supabase not configured – using local mode'); }
+
+    // ========== SAFE STORAGE ==========
+    function lsGet(key, fallback) {
+      try { const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch { return fallback; }
+    }
+    function lsSet(key, val) {
+      try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) { console.warn('Storage unavailable'); }
+    }
+
+    // ========== STATE ==========
+    let currentUser = null;
+    let localProfile = lsGet('ah_profile', null);
+    let localProgress = {};
+
+    function progressKey() { return 'ah_progress_' + (currentUser ? currentUser.email : 'guest'); }
+    function loadProgress() { localProgress = lsGet(progressKey(), {}); }
+
+    // ========== DATA ==========
+    const FEATURES = [
+      { id: 'quizzes', icon: '📝', title: 'Quizzes', desc: 'Subject · Difficulty levels' },
+      { id: 'progress', icon: '📊', title: 'Progress Tracker', desc: 'Feedback from quiz results' },
+      { id: 'notes', icon: '📚', title: 'content', desc: 'content to be covered per term' },
+      { id: 'pastpapers', icon: '📄', title: 'Past Papers', desc: 'Drive links for each subject' },
+      { id: 'studyguides', icon: '📖', title: 'Study Guides', desc: 'Extra study resources' },
+      { id: 'vr', icon: '🥽', title: 'VR Experience', desc: 'Immersive learning game' },
+      { id: 'games', icon: '🎮', title: 'Games', desc: 'Maths 24 & Word Search' },
+      { id: 'planner', icon: '🗓️', title: 'Study Planner', desc: 'Learner type & weak points' },
+      { id: 'mindmaps', icon: '🧠', title: 'Mind Maps', desc: 'Visual topic maps' },
+      { id: 'focus', icon: '🎯', title: 'Focus Game', desc: 'Train concentration' },
+      { id: 'youtube', icon: '▶️', title: 'YouTube Tutoring', desc: 'Miss Martins videos' },
+    ];
+
+    const NOTES = {
+      maths: {
+        1: `<h4>Term 1 – Algebra & Trigonometry</h4>
+          <h4>Algebraic Expressions</h4>
+          <ul><li>Real numbers: rational vs irrational</li><li>Laws of exponents (including rational exponents)</li><li>Factorisation: common factor, difference of squares, trinomials, grouping</li><li>Simplifying algebraic fractions</li></ul>
+          <h4>Equations & Inequalities</h4>
+          <ul><li>Linear and quadratic equations</li><li>Simultaneous equations (substitution & elimination)</li><li>Linear inequalities and interval notation</li></ul>
+          <h4>Trigonometry</h4>
+          <ul><li>Definitions of sin, cos, tan in a right-angled triangle</li><li>Solving 2D trigonometric problems</li><li>Special angles (0°, 30°, 45°, 60°, 90°)</li></ul>`,
+        2: `<h4>Term 2 – Geometry & Functions</h4>
+          <h4>Euclidean Geometry</h4>
+          <ul><li>Lines, angles, triangles (congruence & similarity)</li><li>Parallel lines and transversals</li><li>Quadrilaterals and their properties</li></ul>
+          <h4>Functions</h4>
+          <ul><li>Linear functions: gradient, intercepts, equation y = mx + c</li><li>Quadratic (parabola): turning point, axis of symmetry</li><li>Hyperbola and exponential functions</li><li>Domain, range and sketching</li></ul>`,
+        3: `<h4>Term 3 – Advanced Topics</h4>
+          <h4>Trigonometric Functions</h4>
+          <ul><li>Graphs of sin, cos, tan</li><li>Amplitude, period, phase shift</li></ul>
+          <h4>Analytical Geometry</h4>
+          <ul><li>Distance formula, midpoint, gradient</li><li>Equation of a straight line</li></ul>
+          <h4>Statistics & Probability</h4>
+          <ul><li>Measures of central tendency and dispersion</li><li>Simple probability, relative frequency</li></ul>
+          <h4>Finance & Growth</h4>
+          <ul><li>Simple and compound interest: A = P(1 + in), A = P(1 + i)<sup>n</sup></li><li>Hire purchase, inflation, population growth</li></ul>`,
+        4: `<h4>Term 4 – Patterns & Revision</h4>
+          <h4>Number Patterns</h4>
+          <ul><li>Arithmetic sequences (constant first difference)</li><li>Quadratic sequences (constant second difference)</li><li>General term and recursive rules</li></ul>
+          <h4>Measurement</h4>
+          <ul><li>Surface area and volume of prisms, cylinders, cones, spheres</li></ul>
+          <p>Full revision of Algebra, Functions, Trigonometry and Geometry for final exams.</p>`
+      },
+      physics: {
+        1: `<h4>Term 1 – Matter & Waves</h4>
+          <h4>Matter & Materials</h4>
+          <ul><li>States of matter & Kinetic Molecular Theory</li><li>The atom: protons, neutrons, electrons, isotopes</li><li>Periodic Table: groups, periods, electron configuration</li><li>Chemical bonding: ionic, covalent, metallic</li></ul>
+          <h4>Waves, Sound & Light</h4>
+          <ul><li>Transverse pulses: amplitude, superposition</li><li>Transverse waves: wavelength, frequency, period, wave speed (v = fλ)</li></ul>`,
+        2: `<h4>Term 2 – Change & Electricity</h4>
+          <h4>Chemical Change</h4>
+          <ul><li>Physical vs chemical change</li><li>Conservation of mass and atoms</li><li>Balanced chemical equations</li></ul>
+          <h4>Electricity & Magnetism</h4>
+          <ul><li>Magnetism: poles, field lines, Earth’s magnetic field</li><li>Electrostatics: charge, conservation, quantisation, polarisation</li><li>Electric circuits: current, potential difference, resistance</li><li>Resistors in series and parallel</li></ul>`,
+        3: `<h4>Term 3 – Mechanics Intro</h4>
+          <h4>Vectors & Scalars</h4>
+          <ul><li>Difference between vector and scalar quantities</li><li>Graphical addition of vectors</li></ul>
+          <h4>Motion in One Dimension</h4>
+          <ul><li>Position, distance, displacement</li><li>Average speed & velocity, acceleration</li><li>Equations of motion</li><li>Graphs of motion</li></ul>`,
+        4: `<h4>Term 4 – Energy & EM Radiation</h4>
+          <h4>Energy</h4>
+          <ul><li>Gravitational potential energy (E<sub>p</sub> = mgh)</li><li>Kinetic energy (E<sub>k</sub> = ½mv²)</li><li>Mechanical energy and conservation</li></ul>
+          <h4>Electromagnetic Radiation</h4>
+          <ul><li>Wave-particle duality</li><li>EM spectrum</li><li>Photon energy E = hf</li></ul>`
+      }
+    };
+
+    // `a` = index of the correct option (options are shuffled when the quiz is shown)
+    const QUIZZES = {
+      maths: {
+        easy: [
+          { q: 'What is the value of 2³ × 2²?', opts: ['2⁵', '2⁶', '4⁵', '8'], a: 0 },
+          { q: 'Factorise: x² − 9', opts: ['(x−3)(x+3)', '(x−9)(x+1)', 'x(x−9)', '(x−3)²'], a: 0 },
+          { q: 'Solve: 2x + 6 = 14', opts: ['x = 4', 'x = 10', 'x = 3', 'x = 8'], a: 0 },
+          { q: 'sin 30° =', opts: ['½', '√3/2', '1', '0'], a: 0 },
+          { q: 'The gradient of y = 3x − 2 is', opts: ['3', '−2', '2', '−3'], a: 0 },
+        ],
+        medium: [
+          { q: 'Simplify: (a²b³)² ÷ a⁴b', opts: ['b⁵', 'a²b⁵', 'a⁴b⁵', 'ab⁵'], a: 0 },
+          { q: 'Solve simultaneously: x + y = 5, 2x − y = 4', opts: ['x=3, y=2', 'x=2, y=3', 'x=4, y=1', 'x=1, y=4'], a: 0 },
+          { q: 'Distance between (1,2) and (4,6) is', opts: ['5', '√13', '7', '√7'], a: 0 },
+          { q: 'A = P(1+i)ⁿ is used for', opts: ['Compound interest', 'Simple interest', 'Linear growth', 'Depreciation only'], a: 0 },
+          { q: 'In an arithmetic sequence the common difference is constant. True or False?', opts: ['True', 'False'], a: 0 },
+        ],
+        hard: [
+          { q: 'The turning point of y = −2(x−1)² + 3 is', opts: ['(1, 3)', '(−1, 3)', '(1, −3)', '(−1, −3)'], a: 0 },
+          { q: 'If cos θ = 3/5 and θ is acute, sin θ =', opts: ['4/5', '3/5', '5/4', '5/3'], a: 0 },
+          { q: 'Sum of interior angles of an n-sided polygon is', opts: ['(n−2) × 180°', 'n × 180°', '(n−1) × 180°', 'n × 90°'], a: 0 },
+          { q: 'Solve: x² − 5x + 6 = 0', opts: ['x = 2 or 3', 'x = 1 or 6', 'x = −2 or −3', 'x = 5 or 1'], a: 0 },
+          { q: 'The sum of the first 4 terms of the arithmetic sequence 2; 5; 8; … is', opts: ['26', '24', '20', '29'], a: 0 },
+        ]
+      },
+      physics: {
+        easy: [
+          { q: 'A quantity with magnitude only is a', opts: ['Scalar', 'Vector', 'Tensor', 'Force'], a: 0 },
+          { q: 'SI unit of force is', opts: ['Newton', 'Joule', 'Watt', 'Pascal'], a: 0 },
+          { q: 'Particles in a solid are', opts: ['Closely packed', 'Far apart', 'Randomly moving fast', 'Not made of atoms'], a: 0 },
+          { q: 'Like charges', opts: ['Repel', 'Attract', 'Neutralise', 'Disappear'], a: 0 },
+          { q: 'v = fλ is the wave equation. True or False?', opts: ['True', 'False'], a: 0 },
+        ],
+        medium: [
+          { q: 'Acceleration is the rate of change of', opts: ['Velocity', 'Distance', 'Mass', 'Temperature'], a: 0 },
+          { q: 'In Eₚ = mgh, what does h represent?', opts: ['Height above reference', 'Mass', 'Gravity', 'Velocity'], a: 0 },
+          { q: 'In series, total resistance is', opts: ['Sum of individual R', 'Product of R', 'Average of R', 'Smallest R'], a: 0 },
+          { q: 'Photon energy E =', opts: ['hf', 'h/f', 'f/h', 'hλ'], a: 0 },
+          { q: 'Isotopes of an element have the same number of', opts: ['Protons', 'Neutrons', 'Nucleons', 'Mass'], a: 0 },
+        ],
+        hard: [
+          { q: 'A car accelerates from 10 m/s to 30 m/s in 5 s. Acceleration is', opts: ['4 m/s²', '8 m/s²', '2 m/s²', '20 m/s²'], a: 0 },
+          { q: 'Two resistors 4 Ω and 12 Ω in parallel. Equivalent R is', opts: ['3 Ω', '16 Ω', '8 Ω', '48 Ω'], a: 0 },
+          { q: 'Mechanical energy is conserved when', opts: ['There are no dissipative forces', 'Friction is present', 'Only kinetic energy changes', 'Always'], a: 0 },
+          { q: 'Frequency of a wave with period 0.02 s is', opts: ['50 Hz', '0.02 Hz', '20 Hz', '2 Hz'], a: 0 },
+          { q: 'v = fλ. If f = 50 Hz and λ = 2 m, the wave speed is', opts: ['100 m/s', '25 m/s', '52 m/s', '0.04 m/s'], a: 0 },
+        ]
+      }
+    };
+
+    // Placeholder links – replace with real ones. Placeholders show a "coming soon" message instead of a dead page.
+    const LINKS = {
+      pastpapers: { maths: 'https://drive.google.com/drive/folders/12vZzV6J_w7hWWfKHXusfZ1LNHY0AjHys?usp=drive_link', physics: 'https://drive.google.com/drive/folders/12dCVS-iW0TaX8LpwLmY3xc1LWDlEvmIb?usp=drive_link' },
+      studyguides: { maths: 'https://drive.google.com/drive/folders/15_xHAbVKpNYOGWxcMu-dkK9-c321wqiG?usp=drive_link', physics: 'https://drive.google.com/drive/folders/19J8OKZfsbYtgY6Kp69t-CEyQJ999tXrk?usp=drive_link' },
+      mindmaps: { maths: 'https://drive.google.com/drive/folders/1mIB69lLrFdfLpcfmQNjjN_74U6ngX0D_', physics: 'https://drive.google.com/drive/folders/1tyuBAcgnnzam_YM-I8DooLQySgtZL3ke' },
+      vr: 'https://hlayi2010.github.io/expovr/',
+    youtube: {
+  maths: {
+    1: 'https://youtube.com/playlist?list=PLRMp_XjPkvIJOIFAXJX_QoghdmVMweRfv&si=dWjjGPnlvNqvglzP',
+    2: 'https://youtube.com/playlist?list=PLRMp_XjPkvIIjIHWqcRkTp6_CBrjNmAix&si=un9lAZAzJaoysPti',
+    3: 'https://youtube.com/playlist?list=PLRMp_XjPkvIIq2GpC9SQIeaMfRRdnyYSk&si=ZaWhWmdiAEYSYHdR',
+    4: 'https://youtube.com/playlist?list=PLRMp_XjPkvIIQiA1FHYv171Yb8IovNjaa&si=pJW1bmYIXx_MUnG_'
+  },
+  physics: {
+    1: 'https://youtube.com/playlist?list=PLRMp_XjPkvIKu5eclNq5CaF6WKSfeVctN&si=SlDzw82iOGG-U7jw',
+    2: 'https://youtube.com/playlist?list=PLRMp_XjPkvIK-JJJEYKqdXIQId9915lKG&si=bmfb90dlzM0KRMn0',
+    3: 'https://youtube.com/playlist?list=PLRMp_XjPkvIKL2sCHNMxMJk2k1xXff6yZ&si=taADpaNG4cxLgqnK',
+    4: 'https://youtube.com/playlist?list=PLRMp_XjPkvIKu5eclNq5CaF6WKSfeVctN&si=SlDzw82iOGG-U7jw'
+  }
+}
+    };
+    const PLACEHOLDER_RE = /PAST_PAPERS_|STUDY_GUIDES_|MINDMAPS_|your-vr-game-link/;
+
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('a[target="_blank"]');
+      if (a && PLACEHOLDER_RE.test(a.href)) { e.preventDefault(); toast('This link is coming soon.'); }
+    });
+
+    // ========== UTILS ==========
+    function showScreen(id) {
+      stopFocus();
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    let toastTimer = null;
+    function toast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    function shuffle(arr) {
+      const a = arr.slice();
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
+    }
+
+    function setAuthMsg(msg, ok) {
+      const el = document.getElementById('auth-msg');
+      el.textContent = msg || '';
+      el.style.color = ok ? 'var(--success)' : 'var(--danger)';
+    }
+
+    function switchAuth(mode) {
+      document.getElementById('tab-login').classList.toggle('active', mode === 'login');
+      document.getElementById('tab-register').classList.toggle('active', mode === 'register');
+      document.getElementById('login-form').classList.toggle('hidden', mode !== 'login');
+      document.getElementById('register-form').classList.toggle('hidden', mode !== 'register');
+      setAuthMsg('');
+    }
+
+    // Press Enter to submit auth forms
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' || !e.target.matches('#login-form input, #register-form input')) return;
+      e.target.closest('#login-form') ? handleLogin() : handleRegister();
+    });
+
+    // ========== AUTH ==========
+    async function handleRegister() {
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      if (!name || !email || password.length < 6) { setAuthMsg('Please fill all fields (password ≥ 6 characters)'); return; }
+
+      try {
+        if (sb) {
+          const { data, error } = await sb.auth.signUp({ email, password, options: { data: { full_name: name } } });
+          if (error) { setAuthMsg(error.message); return; }
+          if (!data.session) {
+            // Email confirmation is switched on in Supabase – no session yet
+            setAuthMsg('Account created! Check your email to confirm, then log in.', true);
+            switchAuth('login');
+            document.getElementById('login-email').value = email;
+            setAuthMsg('Account created! Check your email to confirm, then log in.', true);
+            return;
+          }
+          const { error: pErr } = await sb.from('profiles').upsert({ id: data.user.id, full_name: name, email });
+          if (pErr) console.warn('Profile save failed:', pErr.message);
+          currentUser = { id: data.user.id, name, email };
+        } else {
+          currentUser = { id: 'local_' + Date.now(), name, email };
+          localProfile = currentUser;
+          lsSet('ah_profile', currentUser);
+        }
+      } catch (err) {
+        setAuthMsg('Something went wrong. Check your connection and try again.');
+        return;
+      }
+      enterDashboard();
+      toast('Account created! Welcome ' + name);
+    }
+
+    async function handleLogin() {
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      if (!email || !password) { setAuthMsg('Enter email and password'); return; }
+
+      try {
+        if (sb) {
+          const { data, error } = await sb.auth.signInWithPassword({ email, password });
+          if (error) { setAuthMsg(error.message); return; }
+          const { data: profile } = await sb.from('profiles').select('*').eq('id', data.user.id).maybeSingle();
+          currentUser = { id: data.user.id, name: profile?.full_name || email, email };
+        } else {
+          // Local (demo) mode – no real password check. Configure Supabase for real accounts.
+          if (localProfile && localProfile.email === email) {
+            currentUser = localProfile;
+          } else {
+            currentUser = { id: 'local_' + Date.now(), name: email.split('@')[0], email };
+            localProfile = currentUser;
+            lsSet('ah_profile', currentUser);
+          }
+        }
+      } catch (err) {
+        setAuthMsg('Something went wrong. Check your connection and try again.');
+        return;
+      }
+      enterDashboard();
+      toast('Welcome back, ' + currentUser.name);
+    }
+
+    async function handleLogout() {
+      try { if (sb) await sb.auth.signOut(); } catch (e) {}
+      currentUser = null;
+      localProgress = {};
+      document.getElementById('login-password').value = '';
+      showScreen('landing');
+      toast('Logged out');
+    }
+
+    function enterDashboard() {
+      document.getElementById('user-name').textContent = currentUser.name;
+      document.getElementById('user-avatar').textContent = (currentUser.name || 'U').charAt(0).toUpperCase();
+      loadProgress();
+      renderFeatures();
+      showScreen('dashboard');
+    }
+
+    // ========== DASHBOARD ==========
+    function renderFeatures() {
+      document.getElementById('feature-grid').innerHTML = FEATURES.map(f => `
+        <div class="card feature-card" onclick="openFeature('${f.id}')">
+          <div class="feature-icon">${f.icon}</div>
+          <h3>${f.title}</h3>
+          <p>${f.desc}</p>
+        </div>
+      `).join('');
+    }
+
+    function openFeature(id) {
+      const content = document.getElementById('panel-content');
+      const renderers = {
+        quizzes: renderQuizzes, progress: renderProgress, notes: renderNotes,
+        pastpapers: renderPastPapers, studyguides: renderStudyGuides, vr: renderVR,
+        games: renderGames, planner: renderPlanner, mindmaps: renderMindMaps,
+        focus: renderFocus, youtube: renderYouTube,
+      };
+      showScreen('feature-panel');
+      if (renderers[id]) renderers[id](content);
+    }
+
+    // ========== QUIZZES ==========
+    let quizState = { subject: 'maths', term: 1, difficulty: 'easy', answers: {}, questions: [], score: null };
+
+    function renderQuizzes(el) {
+      el.innerHTML = `
+        <div class="panel-header"><h2>📝 Quizzes</h2></div>
+        <div class="grid grid-3 mb-6">
+          <div><label for="quiz-subject">Subject</label>
+            <select id="quiz-subject"><option value="maths">Mathematics</option><option value="physics">Physics</option></select></div>
+          <div><label for="quiz-term">Term (for your progress record)</label>
+            <select id="quiz-term"><option value="1">Term 1</option><option value="2">Term 2</option><option value="3">Term 3</option><option value="4">Term 4</option></select></div>
+          <div><label for="quiz-diff">Difficulty</label>
+            <select id="quiz-diff"><option value="easy">Easy</option><option value="medium">Medium</option><option value="hard">Hard</option></select></div>
+        </div>
+        <button class="btn btn-primary" onclick="startQuiz()">Start Quiz</button>
+        <div id="quiz-area" class="mt-6"></div>
+      `;
+      document.getElementById('quiz-subject').value = quizState.subject;
+      document.getElementById('quiz-term').value = quizState.term;
+      document.getElementById('quiz-diff').value = quizState.difficulty;
+    }
+
+    function startQuiz() {
+      quizState.subject = document.getElementById('quiz-subject').value;
+      quizState.term = +document.getElementById('quiz-term').value;
+      quizState.difficulty = document.getElementById('quiz-diff').value;
+      quizState.answers = {};
+      quizState.score = null;
+
+      // Shuffle options so the correct answer isn't always first (True/False stays in order)
+      quizState.questions = shuffle(QUIZZES[quizState.subject][quizState.difficulty]).map(q => {
+        if (q.opts.length <= 2) return { q: q.q, opts: q.opts, a: q.a };
+        const order = shuffle(q.opts.map((_, i) => i));
+        return { q: q.q, opts: order.map(i => q.opts[i]), a: order.indexOf(q.a) };
+      });
+
+      document.getElementById('quiz-area').innerHTML = quizState.questions.map((q, i) => `
+        <div class="quiz-q">
+          <p><strong>Q${i + 1}.</strong> ${q.q}</p>
+          <div class="quiz-options">
+            ${q.opts.map((o, j) => `
+              <label><input type="radio" name="q${i}" value="${j}" onchange="quizState.answers[${i}]=${j}" /> ${o}</label>
+            `).join('')}
+          </div>
+        </div>
+      `).join('') + `<button class="btn btn-primary mt-4" onclick="submitQuiz()">Submit Answers</button>`;
+    }
+
+    async function submitQuiz() {
+      const questions = quizState.questions;
+      const unanswered = questions.length - Object.keys(quizState.answers).length;
+      if (unanswered > 0 && !confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) return;
+
+      let correct = 0;
+      questions.forEach((q, i) => { if (quizState.answers[i] === q.a) correct++; });
+      const score = Math.round((correct / questions.length) * 100);
+      quizState.score = score;
+
+      const key = `${quizState.subject}_t${quizState.term}_${quizState.difficulty}`;
+      localProgress[key] = { score, date: new Date().toISOString(), correct, total: questions.length };
+      lsSet(progressKey(), localProgress);
+
+      if (sb && currentUser) {
+        try {
+          const { error } = await sb.from('quiz_progress').upsert({
+            user_id: currentUser.id, subject: quizState.subject, term: quizState.term,
+            difficulty: quizState.difficulty, score, correct, total: questions.length,
+            completed_at: new Date().toISOString()
+          }, { onConflict: 'user_id,subject,term,difficulty' });
+          if (error) console.warn('Cloud save failed:', error.message);
+        } catch (e) { console.warn('Cloud save failed', e); }
+      }
+
+      const colour = score >= 70 ? 'success' : score >= 40 ? 'warning' : 'danger';
+      document.getElementById('quiz-area').innerHTML = `
+        <div class="card text-center">
+          <h2 style="color:var(--${colour})">${score}%</h2>
+          <p class="mt-2">You got ${correct} out of ${questions.length} correct.</p>
+          <p class="text-muted mt-2">${score >= 70 ? 'Great job! Keep it up.' : score >= 40 ? 'Solid effort – review the notes and try again.' : 'Don’t give up. Go through the notes for this term and retry.'}</p>
+          <button class="btn btn-primary mt-4" onclick="startQuiz()">Retry</button>
+        </div>
+      `;
+      toast('Quiz submitted – score saved!');
+    }
+
+    // ========== PROGRESS ==========
+    function renderProgress(el) {
+      const entries = Object.entries(localProgress);
+      el.innerHTML = `
+        <div class="panel-header"><h2>📊 Progress Tracker</h2></div>
+        ${entries.length === 0 ? '<p class="text-muted">No quiz results yet. Complete a quiz to see your progress!</p>' : ''}
+        <div class="grid grid-2">
+          ${entries.map(([key, p]) => {
+            const [subj, term, diff] = key.split('_');
+            return `
+              <div class="card">
+                <h3>${subj === 'maths' ? 'Mathematics' : 'Physics'} · ${term.replace('t', 'Term ')} · ${diff.charAt(0).toUpperCase() + diff.slice(1)}</h3>
+                <div class="progress-bar"><div class="progress-fill" style="width:${p.score}%"></div></div>
+                <p style="font-size:1.4rem;font-weight:700;color:var(--accent)">${p.score}%</p>
+                <p class="text-muted">${p.correct}/${p.total} correct · ${new Date(p.date).toLocaleDateString()}</p>
+              </div>`;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    // ========== NOTES ==========
+    function renderNotes(el) {
+      el.innerHTML = `
+        <div class="panel-header"><h2>📚 Predefined Notes</h2></div>
+        <div class="flex gap-3 mb-4" style="flex-wrap:wrap">
+          <button class="btn btn-sm" id="notes-maths-btn" onclick="showNotesSubject('maths')">Mathematics</button>
+          <button class="btn btn-sm" id="notes-physics-btn" onclick="showNotesSubject('physics')">Physics</button>
+        </div>
+        <div class="term-tabs" id="notes-terms"></div>
+        <div class="note-content" id="notes-body"></div>
+      `;
+      showNotesSubject('maths');
+    }
+
+    function showNotesSubject(subj) {
+      document.getElementById('notes-maths-btn').classList.toggle('btn-primary', subj === 'maths');
+      document.getElementById('notes-physics-btn').classList.toggle('btn-primary', subj === 'physics');
+      document.getElementById('notes-terms').innerHTML = [1,2,3,4].map(t =>
+        `<div class="term-tab" onclick="showNote(${t}, '${subj}')">Term ${t}</div>`).join('');
+      showNote(1, subj);
+    }
+
+    function showNote(term, subj) {
+      document.querySelectorAll('#notes-terms .term-tab').forEach((el, i) => el.classList.toggle('active', i + 1 === term));
+      document.getElementById('notes-body').innerHTML = NOTES[subj][term];
+    }
+
+    // ========== PAST PAPERS / GUIDES / MIND MAPS / VR ==========
+    function linkPage(el, title, intro, items) {
+      el.innerHTML = `
+        <div class="panel-header"><h2>${title}</h2></div>
+        <p class="text-muted mb-4">${intro}</p>
+        <div class="link-list">
+          ${items.map(([url, label]) => `<a href="${url}" target="_blank" rel="noopener noreferrer">${label}</a>`).join('')}
+        </div>`;
+    }
+    function renderPastPapers(el) {
+      linkPage(el, '📄 Past Papers', 'Links to Google Drive folders with past exam papers.',
+        [[LINKS.pastpapers.maths, '📁 Mathematics Past Papers'], [LINKS.pastpapers.physics, '📁 Physics Past Papers']]);
+    }
+    function renderStudyGuides(el) {
+      linkPage(el, '📖 Study Guides', 'Extra study resources for both subjects.',
+        [[LINKS.studyguides.maths, '📁 Mathematics Study Guides'], [LINKS.studyguides.physics, '📁 Physics Study Guides']]);
+    }
+    function renderMindMaps(el) {
+      linkPage(el, '🧠 Mind Maps', 'Visual mind maps for each subject.',
+        [[LINKS.mindmaps.maths, '🗺️ Mathematics Mind Maps'], [LINKS.mindmaps.physics, '🗺️ Physics Mind Maps']]);
+    }
+    function renderVR(el) {
+      el.innerHTML = `
+        <div class="panel-header"><h2>🥽 VR Experience</h2></div>
+        <div class="card text-center">
+          <p class="mb-4">learn how to make cardboard vr goggles at https://drive.google.com/file/d/1EdPKU-hGBVta6QJfCJ_sY5jMiKkLpr11/view?usp=drivesdk then insert your phone and play the game!!! </p>
+          <a class="btn btn-primary" href="${LINKS.vr}" target="_blank" rel="noopener noreferrer">Open VR Game</a>
+        </div>`;
+    }
+
+    // ========== GAMES ==========
+    function renderGames(el) {
+      el.innerHTML = `
+        <div class="panel-header"><h2>🎮 Games</h2></div>
+        <div class="flex gap-3 mb-6" style="flex-wrap:wrap">
+          <button class="btn btn-primary" onclick="startMath24()">Maths 24</button>
+          <button class="btn" onclick="startWordSearch('maths')">Word Search – Maths</button>
+          <button class="btn" onclick="startWordSearch('physics')">Word Search – Physics</button>
+        </div>
+        <div class="game-area" id="game-area"><p class="text-muted text-center">Choose a game to begin.</p></div>
+      `;
+    }
+
+    // ---- Maths 24 ----
+    function canMake24(nums) {
+      if (nums.length === 1) return Math.abs(nums[0] - 24) < 1e-6;
+      for (let i = 0; i < nums.length; i++) {
+        for (let j = 0; j < nums.length; j++) {
+          if (i === j) continue;
+          const rest = nums.filter((_, k) => k !== i && k !== j);
+          const a = nums[i], b = nums[j];
+          const results = [a + b, a - b, a * b];
+          if (Math.abs(b) > 1e-9) results.push(a / b);
+          for (const r of results) if (canMake24([...rest, r])) return true;
+        }
+      }
+      return false;
+    }
+
+    function startMath24() {
+      let nums;
+      do { nums = shuffle([1,2,3,4,5,6,7,8,9]).slice(0, 4); } while (!canMake24(nums)); // always solvable
+      window._math24 = { nums };
+      document.getElementById('game-area').innerHTML = `
+        <h3 class="text-center">Make 24</h3>
+        <p class="text-center text-muted">Use all four numbers exactly once with + − × ÷ (and brackets) to make 24.</p>
+        <div class="math24-board">${nums.map(n => `<div class="math24-card">${n}</div>`).join('')}</div>
+        <div class="text-center">
+          <input id="math24-expr" placeholder="e.g. (8-2)×(6-2)" autocomplete="off" style="max-width:280px;margin:0 auto 12px;display:block" />
+          <button class="btn btn-primary" onclick="checkMath24()">Check</button>
+          <button class="btn btn-ghost" onclick="startMath24()">New Round</button>
+          <p id="math24-msg" class="mt-4"></p>
+        </div>
+      `;
+      document.getElementById('math24-expr').addEventListener('keydown', e => { if (e.key === 'Enter') checkMath24(); });
+    }
+
+    function checkMath24() {
+      const raw = document.getElementById('math24-expr').value;
+      const msg = document.getElementById('math24-msg');
+      const fail = (t, c) => { msg.textContent = t; msg.style.color = `var(--${c})`; };
+      // Accept × ÷ − and x/X as typed on phones, then allow only safe characters
+      const expr = raw.replace(/×|x|X/g, '*').replace(/÷/g, '/').replace(/[−–]/g, '-').trim();
+      if (!expr || !/^[\d+\-*/().\s]+$/.test(expr)) return fail('Use only the numbers and + − × ÷ ( ).', 'danger');
+      const used = (expr.match(/\d+/g) || []).map(Number).sort((a, b) => a - b).join(',');
+      const target = [...window._math24.nums].sort((a, b) => a - b).join(',');
+      if (used !== target) return fail('You must use each of the four numbers exactly once.', 'danger');
+      try {
+        const result = Function('"use strict"; return (' + expr + ')')();
+        if (!Number.isFinite(result)) return fail('That expression is not valid.', 'danger');
+        if (Math.abs(result - 24) < 0.001) fail('✓ Correct! Well done.', 'success');
+        else fail(`That equals ${Math.round(result * 100) / 100}, not 24. Try again.`, 'warning');
+      } catch { fail('Invalid expression.', 'danger'); }
+    }
+
+    // ---- Word Search ----
+    const WORD_LISTS = {
+      maths: ['ALGEBRA', 'FUNCTION', 'GRADIENT', 'EQUATION', 'TRIANGLE', 'SEQUENCE', 'PROBABILITY', 'GEOMETRY'],
+      physics: ['VELOCITY', 'ENERGY', 'VECTOR', 'WAVE', 'CHARGE', 'CIRCUIT', 'ATOM', 'FORCE']
+    };
+
+    function startWordSearch(subj) {
+      const size = 12; // large enough for the longest word (PROBABILITY = 11)
+      const grid = Array.from({ length: size }, () => Array(size).fill(''));
+      const placedWords = [];
+
+      WORD_LISTS[subj].forEach(w => {
+        for (let attempt = 0; attempt < 100; attempt++) {
+          const horizontal = Math.random() > 0.5;
+          const r = Math.floor(Math.random() * (horizontal ? size : size - w.length + 1));
+          const c = Math.floor(Math.random() * (horizontal ? size - w.length + 1 : size));
+          const cells = [...w].map((_, i) => horizontal ? [r, c + i] : [r + i, c]);
+          if (cells.every(([rr, cc]) => !grid[rr][cc])) { // no overlaps, so every word stays findable
+            cells.forEach(([rr, cc], i) => grid[rr][cc] = w[i]);
+            placedWords.push(w);
+            return;
+          }
+        }
+      });
+
+      const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      for (let r = 0; r < size; r++)
+        for (let c = 0; c < size; c++)
+          if (!grid[r][c]) grid[r][c] = letters[Math.floor(Math.random() * 26)];
+
+      window._ws = { grid, words: placedWords, found: new Set(), selected: [] };
+
+      document.getElementById('game-area').innerHTML = `
+        <h3 class="text-center">Word Search – ${subj === 'maths' ? 'Mathematics' : 'Physics'}</h3>
+        <p class="text-center text-muted mb-2">Tap the letters of each word in order. Find: ${placedWords.join(', ')}</p>
+        <div class="word-grid" style="grid-template-columns: repeat(${size}, minmax(0, 1fr))">
+          ${grid.map((row, r) => row.map((ch, c) =>
+            `<div class="word-cell" data-r="${r}" data-c="${c}" onclick="wsSelect(${r},${c})">${ch}</div>`).join('')).join('')}
+        </div>
+        <p class="text-center mt-2">Found: <span id="ws-found">0</span> / ${placedWords.length}</p>
+        <div class="text-center"><button class="btn btn-sm btn-ghost mt-2" onclick="startWordSearch('${subj}')">New Grid</button></div>
+      `;
+    }
+
+    function wsSelect(r, c) {
+      const ws = window._ws;
+      const cell = document.querySelector(`.word-cell[data-r="${r}"][data-c="${c}"]`);
+      if (!ws || cell.classList.contains('found')) return;
+      const idx = ws.selected.findIndex(s => s.r === r && s.c === c);
+      if (idx >= 0) { ws.selected.splice(idx, 1); cell.classList.remove('selected'); }
+      else { ws.selected.push({ r, c }); cell.classList.add('selected'); }
+
+      const letters = ws.selected.map(s => ws.grid[s.r][s.c]).join('');
+      const rev = [...letters].reverse().join('');
+      const hit = ws.words.find(w => !ws.found.has(w) && (letters === w || rev === w));
+      if (hit) {
+        ws.found.add(hit);
+        ws.selected.forEach(s => {
+          const el = document.querySelector(`.word-cell[data-r="${s.r}"][data-c="${s.c}"]`);
+          el.classList.remove('selected');
+          el.classList.add('found');
+        });
+        ws.selected = [];
+        document.getElementById('ws-found').textContent = ws.found.size;
+        if (ws.found.size === ws.words.length) toast('All words found! 🎉');
+      }
+    }
+
+    // ========== FOCUS GAME ==========
+    let focusTimer = null;
+    function renderFocus(el) {
+      el.innerHTML = `
+        <div class="panel-header"><h2>🎯 Focus Game</h2></div>
+        <div class="card text-center">
+          <p class="text-muted mb-4">Click the circle when it glows. Train your reaction &amp; concentration.</p>
+          <div class="focus-circle" id="focus-circle" onclick="focusClick()">READY</div>
+          <p>Score: <strong id="focus-score">0</strong> · Misses: <strong id="focus-miss">0</strong></p>
+          <button class="btn btn-primary mt-4" onclick="startFocus()">Start</button>
+          <button class="btn btn-ghost mt-4" onclick="stopFocus()">Stop</button>
+        </div>
+      `;
+      window._focus = { score: 0, miss: 0, active: false, waiting: false };
+    }
+
+    function startFocus() {
+      stopFocus();
+      window._focus = { score: 0, miss: 0, active: true, waiting: false };
+      document.getElementById('focus-score').textContent = 0;
+      document.getElementById('focus-miss').textContent = 0;
+      scheduleFocus();
+    }
+
+    function scheduleFocus() {
+      if (!window._focus?.active) return;
+      focusTimer = setTimeout(() => {
+        const circle = document.getElementById('focus-circle');
+        if (!circle || !window._focus.active) return;
+        circle.style.background = 'rgba(0,240,255,0.3)';
+        circle.style.boxShadow = '0 0 60px var(--accent)';
+        circle.textContent = 'CLICK!';
+        window._focus.waiting = true;
+        focusTimer = setTimeout(() => {
+          if (!window._focus.active || !window._focus.waiting) return;
+          window._focus.waiting = false;
+          window._focus.miss++;
+          document.getElementById('focus-miss').textContent = window._focus.miss;
+          resetFocusCircle();
+          scheduleFocus();
+        }, 900);
+      }, 800 + Math.random() * 2200);
+    }
+
+    function focusClick() {
+      const f = window._focus;
+      if (!f?.active) return;
+      if (f.waiting) {
+        f.score++;
+        f.waiting = false;
+        document.getElementById('focus-score').textContent = f.score;
+        clearTimeout(focusTimer);
+        resetFocusCircle();
+        scheduleFocus();
+      } else {
+        f.miss++;
+        document.getElementById('focus-miss').textContent = f.miss;
+      }
+    }
+
+    function resetFocusCircle() {
+      const circle = document.getElementById('focus-circle');
+      if (circle) {
+        circle.style.background = 'transparent';
+        circle.style.boxShadow = '0 0 40px var(--accent-glow)';
+        circle.textContent = '…';
+      }
+    }
+
+    function stopFocus() {
+      clearTimeout(focusTimer);
+      if (window._focus) { window._focus.active = false; window._focus.waiting = false; }
+      resetFocusCircle();
+      const c = document.getElementById('focus-circle');
+      if (c) c.textContent = 'READY';
+    }
+
+    // ========== STUDY PLANNER ==========
+    function renderPlanner(el) {
+      const saved = lsGet('ah_planner_' + (currentUser ? currentUser.email : 'guest'), null);
+      el.innerHTML = `
+        <div class="panel-header"><h2>🗓️ Study Planner</h2></div>
+        <p class="text-muted mb-4">Identify your learner type and weak areas to get a personalised plan.</p>
+
+        <h3 class="mb-2">1. Learner Type</h3>
+        <div id="learner-types">
+          ${['Visual', 'Auditory', 'Reading/Writing', 'Kinesthetic'].map(t => `
+            <div class="learner-type ${saved?.type === t ? 'selected' : ''}" onclick="selectLearnerType(this, '${t}')">
+              <strong>${t}</strong>
+              <p class="text-muted" style="font-size:0.85rem;margin-top:4px">${
+                t === 'Visual' ? 'Diagrams, mind maps, colour-coding' :
+                t === 'Auditory' ? 'Videos, explanations, discussion' :
+                t === 'Reading/Writing' ? 'Notes, summaries, rewriting' :
+                'Practice problems, experiments, movement'}</p>
+            </div>`).join('')}
+        </div>
+
+        <h3 class="mt-6 mb-2">2. Weak Points (select all that apply)</h3>
+        <div class="grid grid-2" id="weak-points">
+          ${['Algebra', 'Functions', 'Geometry', 'Trigonometry', 'Waves', 'Electricity', 'Mechanics', 'Chemical Change'].map(w => `
+            <label style="display:flex;align-items:center;gap:8px;padding:10px;background:rgba(0,0,0,0.2);border-radius:8px;cursor:pointer;color:var(--text)">
+              <input type="checkbox" style="width:auto" value="${w}" ${saved?.weak?.includes(w) ? 'checked' : ''} /> ${w}
+            </label>`).join('')}
+        </div>
+
+        <button class="btn btn-primary mt-6" onclick="generatePlan()">Generate Study Plan</button>
+        <div id="plan-result" class="mt-6"></div>
+      `;
+      window._learnerType = saved?.type || null;
+    }
+
+    function selectLearnerType(el, type) {
+      document.querySelectorAll('.learner-type').forEach(e => e.classList.remove('selected'));
+      el.classList.add('selected');
+      window._learnerType = type;
+    }
+
+    async function generatePlan() {
+      if (!window._learnerType) { toast('Please select a learner type'); return; }
+      const weak = [...document.querySelectorAll('#weak-points input:checked')].map(i => i.value);
+      const plan = { type: window._learnerType, weak, date: new Date().toISOString() };
+      lsSet('ah_planner_' + (currentUser ? currentUser.email : 'guest'), plan);
+
+      if (sb && currentUser) {
+        try {
+          const { error } = await sb.from('learner_profiles').upsert({
+            user_id: currentUser.id, learner_type: plan.type, weak_points: weak, updated_at: plan.date
+          });
+          if (error) console.warn('Cloud save failed:', error.message);
+        } catch (e) { console.warn('Cloud save failed', e); }
+      }
+
+      const strategies = {
+        Visual: 'Use mind maps, colour-coded notes, and the VR / diagram resources.',
+        Auditory: 'Subscribe to Miss Martins and watch Miss Martins YouTube videos and explain topics out loud.',
+        'Reading/Writing': 'Rewrite the  notes in your own words and summarise past papers.',
+        Kinesthetic: 'Do practice quizzes daily and try the Maths 24 / Focus games between sessions.'
+      };
+      const weakAdvice = weak.length
+        ? weak.map(w => `<li><strong>${w}</strong> – dedicate 2–3 short sessions this week; start with Easy quizzes then move up.</li>`).join('')
+        : '<li>No specific weak points selected – keep a balanced rotation of all topics.</li>';
+
+      document.getElementById('plan-result').innerHTML = `
+        <div class="card">
+          <h3>Your Personalised Plan</h3>
+          <p class="mt-2"><strong>Learner type:</strong> ${plan.type}</p>
+          <p class="mt-2">${strategies[plan.type]}</p>
+          <h4 class="mt-4" style="color:var(--accent)">Focus areas</h4>
+          <ul style="padding-left:20px;margin-top:8px">${weakAdvice}</ul>
+          <h4 class="mt-4" style="color:var(--accent)">Suggested weekly rhythm</h4>
+          <ul style="padding-left:20px;margin-top:8px">
+            <li>Mon / Wed / Fri – 40 min notes + 1 quiz (target weak topics)</li>
+            <li>Tue / Thu – Past paper questions or YouTube tutoring</li>
+            <li>Weekend – Mind maps + Games (Maths 24 / Word Search) for recall</li>
+            <li>Daily – 5 min Focus Game before studying</li>
+          </ul>
+        </div>`;
+      toast('Study plan saved!');
+    }
+
+    // ========== YOUTUBE ==========
+    function renderYouTube(el) {
+      const list = subj => [1,2,3,4].map(t =>
+        `<a href="${LINKS.youtube[subj][t]}" target="_blank" rel="noopener noreferrer">Term ${t} ${subj === 'maths' ? 'Maths' : 'Physics'} videos</a>`).join('');
+      el.innerHTML = `
+        <div class="panel-header"><h2>▶️ YouTube Tutoring – Miss Martins</h2></div>
+        <p class="text-muted mb-4">Curated search links for Miss Martins Grade 10 videos by subject and term.</p>
+        <h3 class="mb-2">Mathematics</h3>
+        <div class="link-list mb-6">${list('maths')}</div>
+        <h3 class="mb-2">Physics (Physical Sciences)</h3>
+        <div class="link-list">${list('physics')}</div>
+      `;
+    }
+
+    // ========== INIT ==========
+    (async function init() {
+      try {
+        if (sb) {
+          const { data: { session } } = await sb.auth.getSession();
+          if (session) {
+            const { data: profile } = await sb.from('profiles').select('*').eq('id', session.user.id).maybeSingle();
+            currentUser = { id: session.user.id, name: profile?.full_name || session.user.email, email: session.user.email };
+            enterDashboard();
+          }
+        }
+      } catch (e) { console.warn('Session restore failed', e); }
+    })();
+  </script>
+</body>
+</html>
